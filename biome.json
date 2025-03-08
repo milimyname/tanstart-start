@@ -25,7 +25,15 @@
   "linter": {
     "enabled": true,
     "rules": { "recommended": false },
-    "ignore": ["dist", ".vinxi", ".wrangler", ".vercel", ".netlify", ".output", "build/"]
+    "ignore": [
+      "dist",
+      ".vinxi",
+      ".wrangler",
+      ".vercel",
+      ".netlify",
+      ".output",
+      "build/"
+    ]
   },
   "javascript": {
     "formatter": {
@@ -524,7 +532,7 @@
             "useHookAtTopLevel": "error"
           },
           "nursery": {
-            "useSortedClasses":"error"
+            "useSortedClasses": "error"
           }
         }
       }

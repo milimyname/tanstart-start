@@ -1,0 +1,29 @@
+version: "3"
+
+volumes:
+  postgres-data:
+
+networks:
+  tanstack-start:
+
+services:
+  postgres:
+    image: postgis/postgis
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PORT: 6666
+    ports:
+      - 6666:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - tanstack-start
