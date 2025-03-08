@@ -1,14 +1,10 @@
-import { SidebarProvider, SidebarTrigger } from "@/app/components/ui/sidebar";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { AppSidebar } from "@/app/components/app-sidebar";
-import {
-  createRootRoute,
-  HeadContent,
-  Outlet,
-  Scripts,
-} from "@tanstack/react-router";
-import type { ReactNode } from "react";
-//@ts-ignore
+import { SidebarProvider, SidebarTrigger } from "@/app/components/ui/sidebar";
+//@ts-expect-error
 import appCss from "@/app/styles/app.css?url";
+import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 
 export const Route = createRootRoute({
   head: () => ({
