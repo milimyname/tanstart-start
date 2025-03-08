@@ -1,20 +1,16 @@
-import { SidebarProvider, SidebarTrigger } from "@/app/components/ui/sidebar";
 import { AppSidebar } from "@/app/components/app-sidebar";
-import {
-  createRootRoute,
-  HeadContent,
-  Outlet,
-  Scripts,
-} from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { SidebarProvider, SidebarTrigger } from "@/app/components/ui/sidebar";
 //@ts-ignore
 import appCss from "@/app/styles/app.css?url";
+import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
         charSet: "utf-8",
+        
       },
       {
         name: "viewport",
