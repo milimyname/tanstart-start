@@ -17,6 +17,8 @@ import { auth } from "@/app/lib/server/auth";
 import { NotFound } from "@/app/components/not-found";
 import { DefaultCatchBoundary } from "@/app/components/deafult-catch-boundry";
 import { getWebRequest } from "@tanstack/react-start/server";
+import { ThemeProvider } from "@/app/components/theme-provider";
+import { getServerTheme } from "@/app/lib/server/theme";
 
 export const fetchUser = createServerFn({ method: "GET" }).handler(async () => {
   const request = getWebRequest();
@@ -47,7 +49,12 @@ export const Route = createRootRoute({
     links: [{ rel: "stylesheet", href: appCss }],
   }),
   beforeLoad: async ({ location }) => {
-    if (location.pathname === "/login" || location.pathname === "/signup") return;
+    const theme = await getServerTheme();
+
+    console.log("beforeLoad 1", { theme });
+
+    if (location.pathname === "/login" || location.pathname === "/signup")
+      return { theme };
 
     const user = await fetchUser();
 
@@ -57,7 +64,9 @@ export const Route = createRootRoute({
       });
     }
 
-    return { user };
+    console.log("beforeLoad 2", { theme });
+
+    return { user, theme };
   },
   notFoundComponent: () => <NotFound />,
   errorComponent: (props) => {
@@ -79,20 +88,24 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const { theme } = Route.useRouteContext();
+
   return (
     <html suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
-        {/* <SidebarProvider>
+        <ThemeProvider defaultTheme={theme as any}>
+          {/* <SidebarProvider>
           <AppSidebar />
           <main>
             <SidebarTrigger />
             {children}
           </main>
         </SidebarProvider> */}
-        {children}
+          {children}
+        </ThemeProvider>
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>
