@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest, getCookie } from "@tanstack/react-start/server";
+import { getCookie, getWebRequest } from "@tanstack/react-start/server";
 
 export type Company = "acme-light" | "acme-dark";
 
