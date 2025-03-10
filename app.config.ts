@@ -12,6 +12,10 @@ export default defineConfig({
     ],
   },
 
+  server: {
+    preset: "bun",
+  },
+
   react: {
     babel: {
       plugins: [
