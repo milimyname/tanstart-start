@@ -2,7 +2,7 @@ import { db } from "@/app/lib/server/db";
 import * as authSchema from "@/app/lib/server/db/schema/auth-schema";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { openAPI } from "better-auth/plugins";
+import { openAPI, organization } from "better-auth/plugins";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
@@ -18,5 +18,5 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [openAPI()],
+  plugins: [openAPI(), organization()],
 });
