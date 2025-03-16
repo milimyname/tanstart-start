@@ -1,4 +1,3 @@
-import { cn } from "@/app/utils";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -9,10 +8,11 @@ import {
 } from "@/app/components/ui/card";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import { useForm } from "@tanstack/react-form";
-import * as v from "valibot";
 import { signUp } from "@/app/lib/auth-client";
+import { cn } from "@/app/utils";
+import { useForm } from "@tanstack/react-form";
 import { Link, useNavigate } from "@tanstack/react-router";
+import * as v from "valibot";
 
 const SignUpSchema = v.pipe(
   v.object({
@@ -25,7 +25,6 @@ const SignUpSchema = v.pipe(
       v.string(),
       v.nonEmpty("Please enter your email."),
       v.email("The email is badly formatted."),
-      v.maxLength(30, "Your email is too long."),
     ),
     password: v.pipe(
       v.string(),

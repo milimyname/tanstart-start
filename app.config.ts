@@ -1,6 +1,8 @@
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "@tanstack/react-start/config";
 import tsConfigPaths from "vite-tsconfig-paths";
+import { imagetools } from 'vite-imagetools'
+
 
 export default defineConfig({
   vite: {
@@ -9,6 +11,7 @@ export default defineConfig({
         projects: ["./tsconfig.json"],
       }),
       tailwindcss(),
+      imagetools(),
     ],
   },
 

@@ -1,4 +1,3 @@
-import { cn } from "@/app/utils";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -9,10 +8,11 @@ import {
 } from "@/app/components/ui/card";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
+import { signIn } from "@/app/lib/auth-client";
+import { cn } from "@/app/utils";
+import { useForm } from "@tanstack/react-form";
 import { Link, useNavigate } from "@tanstack/react-router";
 import * as v from "valibot";
-import { signIn } from "@/app/lib/auth-client";
-import { useForm } from "@tanstack/react-form";
 
 const LoginSchema = v.pipe(
   v.object({
@@ -45,7 +45,7 @@ export function LoginForm({
       password: "",
     },
     validators: {
-      onChange: LoginSchema,
+      onSubmit: LoginSchema,
     },
     onSubmit: async ({ value }) => {
       await signIn.email(

@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { AppSidebar } from "@/app/components/app-sidebar";
+import { DefaultCatchBoundary } from "@/app/components/deafult-catch-boundry";
+import { NotFound } from "@/app/components/not-found";
+import { ThemeProvider } from "@/app/components/theme-provider";
 import { SidebarProvider, SidebarTrigger } from "@/app/components/ui/sidebar";
+import { auth } from "@/app/lib/server/auth";
+import { getServerTheme } from "@/app/lib/server/theme";
 //@ts-expect-error
 import appCss from "@/app/styles/app.css?url";
 import {
@@ -10,15 +15,10 @@ import {
   createRootRoute,
   redirect,
 } from "@tanstack/react-router";
-import type { ReactNode } from "react";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
-import { auth } from "@/app/lib/server/auth";
-import { NotFound } from "@/app/components/not-found";
-import { DefaultCatchBoundary } from "@/app/components/deafult-catch-boundry";
 import { getWebRequest } from "@tanstack/react-start/server";
-import { ThemeProvider } from "@/app/components/theme-provider";
-import { getServerTheme } from "@/app/lib/server/theme";
+import type { ReactNode } from "react";
 
 export const fetchUser = createServerFn({ method: "GET" }).handler(async () => {
   const request = getWebRequest();
@@ -50,8 +50,6 @@ export const Route = createRootRoute({
   }),
   beforeLoad: async ({ location }) => {
     const theme = await getServerTheme();
-
-    console.log("beforeLoad 1", { theme });
 
     if (location.pathname === "/login" || location.pathname === "/signup")
       return { theme };
@@ -88,7 +86,7 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  const { theme } = Route.useRouteContext();
+  const { theme, user } = Route.useRouteContext();
 
   return (
     <html suppressHydrationWarning>
@@ -97,14 +95,17 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         <ThemeProvider defaultTheme={theme as any}>
-          {/* <SidebarProvider>
-          <AppSidebar />
-          <main>
-            <SidebarTrigger />
-            {children}
-          </main>
-        </SidebarProvider> */}
-          {children}
+          {user ? (
+            <SidebarProvider>
+              <AppSidebar />
+              <main>
+                <SidebarTrigger />
+                {children}
+              </main>
+            </SidebarProvider>
+          ) : (
+            <main className="full-width">{children}</main>
+          )}
         </ThemeProvider>
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
